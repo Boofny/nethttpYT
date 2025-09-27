@@ -1,12 +1,12 @@
 package main
 
-//this is a main merge from another brach
-//some code changes
 import (
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/dreamsofcode-io/nethttp/middleware"
 )
 
 func handleOther(w http.ResponseWriter, r *http.Request) {
@@ -27,11 +27,6 @@ func handleOther(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-// func handleOther(w http.ResponseWriter, r *http.Request) {
-// 	log.Println("Received a non domain request")
-// 	w.Write([]byte("Hello, stranger..."))
-// }
-
 func handle(w http.ResponseWriter, r *http.Request) {
 	log.Println("Received a request at my domain")
 	w.Write([]byte("Hello, Domain name!"))
@@ -39,12 +34,21 @@ func handle(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	router := http.NewServeMux()
-	router.HandleFunc("/", handleOther)
+	router.HandleFunc("/test", handleOther)
 	router.HandleFunc("dreamsofcode.foo/", handle)
 
+	// e.Use(middleware.CORS())
+	//use needs to be the the option then middleware.CORS will pass default values
+	//i think we can imagen the stack as the use function and the 
+	//middleware.CORS or middleware.CustomCORS as the logging and allow and logging 
+	stack := middleware.CreateStack(
+		middleware.Logging,
+		middleware.AllowCors,//this is allowing cors
+	)
+
 	server := http.Server{
-		Addr:    ":8080",
-		Handler: router,
+		Addr:    ":8081",
+		Handler: stack(router),
 	}
 
 	fmt.Println("Server listening on port",server.Addr)

@@ -27,7 +27,7 @@ func LoadUser(next http.Handler) http.Handler {
 
 func AllowCors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Origin", "*")//will need this bro bro
 		log.Println("Enabling CORS")
 		next.ServeHTTP(w, r)
 	})
