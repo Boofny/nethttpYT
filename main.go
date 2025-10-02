@@ -29,13 +29,15 @@ func handleOther(w http.ResponseWriter, r *http.Request) {
 
 func handle(w http.ResponseWriter, r *http.Request) {
 	log.Println("Received a request at my domain")
+	http.ServeFile(w, r, "./index.html")
 	w.Write([]byte("Hello, Domain name!"))
 }
 
 func main() {
 	router := http.NewServeMux()
 	router.HandleFunc("/test", handleOther)
-	router.HandleFunc("dreamsofcode.foo/", handle)
+	router.HandleFunc("/files", handle)
+// e.Static("/static", "static") this is how echo handles static
 
 	// e.Use(middleware.CORS())
 	//use needs to be the the option then middleware.CORS will pass default values

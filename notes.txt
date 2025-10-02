@@ -1,0 +1,1 @@
+what i need to be able to learn is static file loading http.serveFile and http.FileServer need to do some more reserch tho
