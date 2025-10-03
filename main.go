@@ -31,7 +31,7 @@ func handleOther(w http.ResponseWriter, r *http.Request) {
 // NOTE: some example of serving an entire dir scripts and all
 //
 // func main() {
-//   fs := http.FileServer(http.Dir("./static"))
+//   fs := http.FileServer(http.Dir("."))
 //   http.Handle("/static/", http.StripPrefix("/static/", fs))
 //   http.ListenAndServe(":8080", nil)
 // }
@@ -39,7 +39,7 @@ func handleOther(w http.ResponseWriter, r *http.Request) {
 
 func handle(w http.ResponseWriter, r *http.Request) {
 	log.Println("Received a request at my domain")
-	http.ServeFile(w, r, "../OneOffProjects/BetterUrlShortner/Front/ReactFront/index.html")
+	http.ServeFile(w, r, ".")
 	w.Write([]byte("Hello, Domain name!"))
 }
 
